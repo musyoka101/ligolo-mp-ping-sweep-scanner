@@ -1,7 +1,7 @@
 import platform
 from datetime import datetime
 import subprocess
-
+import sys
 
 def instructions():
     print("""
@@ -29,6 +29,9 @@ def network_scan(proxying):
 
     for ip in range(first_host, last_host):
         addr = f"{subnet_ip}.{ip}"
+        #include some debug output to know the pinging is in place
+        sys.stdout.write(f"\rPinging {addr}...")
+        sys.stdout.flush()
         command = f"ping -n 1 {addr}" if platform.system() == 'Windows' else f"ping -c 2 {addr}"
         response = subprocess.run(command, capture_output=True, text=True, shell=True)
         #print(response.stdout)
